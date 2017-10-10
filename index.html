@@ -5,6 +5,10 @@
 </head>
 <body>
   <script type="text/javascript">
+    fetch('https://www.random.org/integers/?num=5&min=1&max=4&col=1&base=10&format=plain&rnd=new')
+      .then(res => res.text())
+      .then(text => text.split('\n'))
+      .then(nums => console.log(nums))
 
   </script>
 </body>
