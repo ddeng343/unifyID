@@ -11,16 +11,30 @@
     //   .then(res => res.text())
     //   .then(text => text.split('\n'))
     //   .then(nums => {
-        nums = [];
-
-        for (var i = 0; i < 5000; i++) {
-          nums[i] = i;
-        }
 
         const canvas = document.querySelector('#img');
         const context = canvas.getContext('2d');
 
-        var clampedArr = new Uint8ClampedArray(canvas.width * canvas.height * 4);
+        const nums = [];
+
+        for (let i = 0; i < canvas.height * canvas.width; i++) {
+          nums[i] = i;
+        }
+
+        const clampedArr = new Uint8ClampedArray(canvas.height * canvas.width * 4);
+
+        for(let height = 0; height < canvas.height; height++) {
+          for(let width = 0; width < canvas.width; width++) {
+            const index = (height * canvas.width + width) * 4;
+            for (let i = 0; i < 4; i++) {
+              clampedArr[index + i] = Math.floor(nums[height*width]/(i+1)) % 256;
+            }
+          }
+        }
+
+        const imgData = context.createImageData(canvas.height, canvas.width);
+        imgData.data.set(clampedArr);
+        context.putImageData(imgData, 0, 0);
       // })
 
   </script>
